@@ -1,3 +1,4 @@
+const newrelic = require('newrelic');
 const { createServer } = require('http')
 const next = require('next')
 
@@ -10,6 +11,7 @@ app.prepare().then(() => {
   createServer((req, res) => {
     const parsedUrl = new URL(req.url, 'http://w.w')
     const { pathname, query } = parsedUrl
+    newrelic.setTransactionName(pathname);
 
     if (pathname === '/a') {
       app.render(req, res, '/a', query)
